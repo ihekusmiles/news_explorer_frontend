@@ -1,0 +1,35 @@
+.searchform__container {
+  display: flex;
+  width: 100%;
+  max-width: 608px;
+  margin: 0 auto;
+
+  background-color: #fff;
+  border-radius: 100px;
+}
+
+.searchform__input {
+  flex: 1; /*input box grows and fills remaining space */
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0;
+  padding: 21px 40px 21px 24px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.searchform__input::placeholder {
+  color: #b6bcbf;
+}
+
+.searchform__btn {
+  font-weight: 500;
+  margin: 0;
+  color: #fff;
+  background-color: #2f71e5;
+  padding: 20px 56px;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+}

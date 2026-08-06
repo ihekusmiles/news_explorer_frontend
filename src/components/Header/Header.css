@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header__logo {
+  align-self: center;
+  font-family: "roboto-slab";
+  font-weight: 700;
+  font-size: 20px;
+  margin: 30px auto 26px 104px;
+}
+
+.header__buttons {
+  display: flex;
+}
+
+.header__home-btn {
+  font-weight: 500;
+  color: white;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid white;
+  padding: 30px 0 26px 0;
+}
+
+.header__signin-btn {
+  align-self: center;
+  font-weight: 500;
+  color: white;
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 100px;
+  min-width: 152px;
+  max-width: 24px;
+  padding: 12px 0;
+  margin: 19px 116px 13px 54px;
+}

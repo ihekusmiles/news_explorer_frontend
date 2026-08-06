@@ -1,9 +1,21 @@
 .page {
   font-family: "roboto", sans-serif;
-  background-color: aqua;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 0px;
+  color: white;
 }
 
+/* syntax: color url position / size repeat attachment */
+/* background: #1e1e1e url('your-image.jpg') center / cover no-repeat fixed; */
 .page__content {
   max-width: 1440px;
+  background-image: url("../../assets/images/page_background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   margin: 0 auto;
+  padding-bottom: 80px;
 }
