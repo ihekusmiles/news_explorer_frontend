@@ -1,0 +1,38 @@
+.about {
+  background-color: #fff;
+  display: flex;
+  color: #1a1b22;
+  gap: 56px;
+  padding: 80px 216px 80px 104px;
+  margin: 0 auto;
+}
+
+.about__image {
+  height: 464px;
+  width: 464px;
+  flex-shrink: 0; /* Prevents image from shrinking on smaller screens */
+  object-fit: cover; /* Prevents image distortion */
+  border-radius: 50%;
+}
+
+.about__container {
+  max-width: 600px;
+  width: 100%;
+  margin-top: 51px;
+}
+
+.about__title-text {
+  font-family: "roboto-slab";
+  font-size: 40px;
+  line-height: 46px;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.about__paragraph {
+  margin: 0 0 16px 0;
+}
+
+.about__paragraph:last-child {
+  margin-bottom: 0;
+}

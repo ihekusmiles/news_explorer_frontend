@@ -69,3 +69,12 @@
     url("./roboto-slab-700.woff2") format("woff2"),
     url("./roboto-slab-700.woff") format("woff");
 }
+
+@font-face {
+  font-family: "source-sans-pro";
+  font-style: normal;
+  font-weight: 400;
+  src:
+    url("./source-sans-pro-regular.woff2") format("woff2"),
+    url("./source-sans-pro-regular.woff") format("woff");
+}

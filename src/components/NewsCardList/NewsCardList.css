@@ -1,0 +1,21 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.newsCardList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  background-color: #f5f6f7;
+  padding: 62px 102px;
+  margin: 0px;
+}
+
+.newsCardList__title {
+  font-family: "roboto-slab";
+  font-size: 40px;
+  line-height: 46px;
+  color: #1a1b22;
+}
