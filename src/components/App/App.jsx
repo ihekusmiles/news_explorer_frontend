@@ -8,9 +8,13 @@ import Main from "../Main/Main";
 import SearchForm from "../SearchForm/SearchForm";
 import About from "../About/About";
 import Footer from "../Footer/Footer";
+
 import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
 import NewsCardList from "../NewsCardList/NewsCardList";
 import NewsCard from "../NewsCard/NewsCard";
+
+import LoginModal from "../LoginModal/LoginModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
 
 function App() {
   // consts: handlers, API functions, contexts consts, useState hooks, useEffects will go here
@@ -54,6 +58,8 @@ function App() {
         </div>
         <Footer />
       </div>
+      <LoginModal buttonText="Sign in" />
+      {/* <RegisterModal buttonText="Sign up" /> */}
     </div>
   );
 }

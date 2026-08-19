@@ -1,0 +1,30 @@
+.modal__label {
+  display: flex;
+  flex-direction: column;
+  font-family: "inter";
+  font-size: 12px;
+  line-height: 100%;
+  color: #2f71e5;
+  margin: 0 auto 31px 0;
+  width: 100%;
+}
+
+.modal__input {
+  font-size: 14px;
+  line-height: 100%;
+  padding: 0;
+  margin: 9px 0 0 0;
+  padding-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+/* width: 100% on .modal__label: Forces the label container 
+to span the entire available width inside .modal__content 
+(which is 430px - padding = 358px)
+
+.width: 100% on .modal__input: Automatically matches the 
+full width of the label above it. If you change the .modal__content padding 
+or max-width in the future, the input will automatically 
+stretch or shrink dynamically without needing manual calculations! */

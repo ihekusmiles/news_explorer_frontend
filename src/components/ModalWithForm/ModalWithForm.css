@@ -1,0 +1,86 @@
+.modal {
+  /* visibility: hidden; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background is responsible for opacity, use rgba to set */
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* .modal__is-opened {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+} */
+
+.modal__content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  padding: 34px 36px 28px;
+  border-radius: 16px;
+  max-width: 430px;
+  width: 100%;
+}
+
+.modal__title {
+  color: #1a1b22;
+  font-size: 24px;
+  line-height: 100%;
+  margin: 0 auto 22px 0;
+  font: #1a1b22;
+}
+
+.modal__close {
+  position: absolute;
+  top: -46px;
+  right: -46px;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.modal__close-btn {
+  background-color: transparent;
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__submit {
+  font-weight: 500;
+  color: #b6bcbf;
+  background-color: #e6e8eb;
+  border: 0;
+  border-radius: 100px;
+  padding: 20px 114px;
+  margin: 8px 0 16px 0;
+}
+
+.modal__form-change-text {
+  display: flex;
+  justify-content: center;
+  font-family: "Inter";
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.modal__form-change-btn {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: #2f71e5;
+  cursor: pointer;
+}
