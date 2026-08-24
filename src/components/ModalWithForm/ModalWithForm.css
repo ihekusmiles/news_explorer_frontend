@@ -1,5 +1,5 @@
 .modal {
-  /* visibility: hidden; */
+  visibility: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,11 +12,10 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
-/* .modal__is-opened {
+.modal__is-opened {
   visibility: visible;
   opacity: 1;
-  transition-delay: 0s;
-} */
+}
 
 .modal__content {
   display: flex;
@@ -31,6 +30,7 @@
 
 .modal__title {
   color: #1a1b22;
+  font-weight: 900;
   font-size: 24px;
   line-height: 100%;
   margin: 0 auto 22px 0;
@@ -45,6 +45,7 @@
   margin: 0;
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .modal__close-btn {

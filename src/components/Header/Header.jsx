@@ -2,7 +2,7 @@ import Navigation from "../Navigation/Navigation";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-function Header({ isLoggedIn }) {
+function Header({ isLoggedIn, handleLoginClick }) {
   const location = useLocation();
   const isSavedNews = location.pathname === "/saved-news";
 
@@ -26,7 +26,13 @@ function Header({ isLoggedIn }) {
             <span className="header__logout-icon" />
           </button>
         ) : (
-          <button className="header__signin-btn">Sign in</button>
+          <button
+            className="header__signin-btn"
+            type="button"
+            onClick={handleLoginClick}
+          >
+            Sign in
+          </button>
         )}
       </div>
     </div>

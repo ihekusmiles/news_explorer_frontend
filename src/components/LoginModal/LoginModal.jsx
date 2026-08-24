@@ -2,9 +2,17 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 // Remember that the children refers to anything within
 // the <ModalWithForm></ModalWithForm> tags.
-function LoginModal({ buttonText }) {
+function LoginModal({ buttonText, isOpen, onClose, onRegisterClick }) {
   return (
-    <ModalWithForm name="login" title="Sign in" buttonText={buttonText}>
+    <ModalWithForm
+      name="login"
+      title="Sign in"
+      textChange="Sign up"
+      buttonText={buttonText}
+      isOpen={isOpen}
+      onClose={onClose}
+      onAltClick={onRegisterClick}
+    >
       <label className="modal__label" htmlFor="login-email">
         Email
         <input

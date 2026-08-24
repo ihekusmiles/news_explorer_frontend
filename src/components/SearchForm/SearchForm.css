@@ -32,3 +32,11 @@
   border-radius: 100px;
   cursor: pointer;
 }
+
+.searchform__btn:hover {
+  background-color: #347eff;
+}
+
+.searchform__btn:active {
+  background-color: #2a65cc;
+}
