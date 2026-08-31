@@ -35,6 +35,10 @@
   border-radius: 10px;
 }
 
+.newsCard__image-keyword::first-letter {
+  text-transform: uppercase;
+}
+
 .newsCard__delete-btn {
   position: absolute;
   top: 24px;

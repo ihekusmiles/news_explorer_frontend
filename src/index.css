@@ -11,6 +11,7 @@
 @import url(./components/NewsCardList/NewsCardList.css);
 @import url(./components/NewsCard/NewsCard.css);
 @import url(./components/Preloader/Preloader.css);
+@import url(./components/NoResults/NoResults.css);
 @import url(./components/ModalWithForm/ModalWithForm.css);
 @import url(./components/LoginModal/LoginModal.css);
 

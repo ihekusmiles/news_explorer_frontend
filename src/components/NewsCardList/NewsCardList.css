@@ -4,12 +4,13 @@
   box-sizing: border-box;
 }
 
-.newsCardList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+/* TODO: padding to 102 for saved-news page later ONLY*/
+.newsCardList__layout {
   background-color: #f5f6f7;
-  padding: 62px 102px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  padding: 62px 104px;
   margin: 0px;
 }
 
@@ -18,4 +19,11 @@
   font-size: 40px;
   line-height: 46px;
   color: #1a1b22;
+  margin: 18px auto 64px 0;
+}
+
+.newsCardList__cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
