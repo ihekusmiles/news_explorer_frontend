@@ -1,6 +1,16 @@
 import NewsCard from "../NewsCard/NewsCard";
 
-function NewsCardList({ newsCards, isLoggedIn, isSavedNewsPage }) {
+function NewsCardList({
+  newsCards,
+  isLoggedIn,
+  isSavedNewsPage,
+  visibleCount,
+  onShowMore,
+}) {
+  const visibleCards = newsCards.slice(0, visibleCount);
+  // check if there are more cards remaining to display
+  const hasMoreCards = visibleCount < newsCards.length;
+
   return (
     <>
       <div className="newsCardList__layout">
@@ -8,11 +18,22 @@ function NewsCardList({ newsCards, isLoggedIn, isSavedNewsPage }) {
         {isLoggedIn && !isSavedNewsPage && (
           <p className="newsCardList__title">Search results</p>
         )}
+        {/* Only render the visibleCards */}
         <div className="newsCardList__cards-container">
-          {newsCards.map((article, index) => (
+          {visibleCards.map((article, index) => (
             <NewsCard key={index} article={article} />
           ))}
         </div>
+        {/* If hasMoreCards then show button */}
+        {hasMoreCards && (
+          <button
+            type="button"
+            className="newsCardList__show-more-btn"
+            onClick={onShowMore}
+          >
+            Show more
+          </button>
+        )}
       </div>
     </>
   );

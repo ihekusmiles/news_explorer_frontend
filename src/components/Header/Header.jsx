@@ -22,7 +22,7 @@ function Header({ isLoggedIn, handleLoginClick }) {
           <button
             className={`header__logout-btn ${isSavedNews ? "header_text_dark" : ""}`}
           >
-            Elise
+            Hector
             <span className="header__logout-icon" />
           </button>
         ) : (

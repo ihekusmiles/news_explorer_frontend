@@ -23,22 +23,26 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import { getNewsArticles } from "../../utils/NewsApi";
 
 function App() {
-  // consts: states, handlers, API functions, contexts consts, useState hooks, useEffects will go here
+  // -----USESTATE CONSTS-----
+  // Keep trach of what modal is active/opened
   const [activeModal, setActiveModal] = useState("");
   // Keep track of if users is logged in or not
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   // keep track of whether or not search results exist
   const [hasSearchResults, setHasSearchResults] = useState(false);
   // Keep track of whether or not search is currently in progress
   const [searchInProgress, setSearchInProgress] = useState(false);
   // Keep track of whether or not a search was submitted
   const [searchSubmitted, setSearchSubmitted] = useState(false);
-  // Keep track of errors
+  // Keep track of whether or not error occurred
   const [errorOccurred, setErrorOccurred] = useState(false);
-  // create newsCard array and set to empty array
+  // Set articles (newsCards) to memory
   const [newsCards, setNewsCards] = useState([]);
-  // storing user's search input into state
+  // Storing user's search input into state
   const [searchKeyword, setSearchKeyword] = useState("");
+  // Keep track of visible cards count
+  const [visibleCount, setVisibleCount] = useState(3);
 
   // Function that opens log in modal
   const handleLoginClick = () => {
@@ -58,23 +62,26 @@ function App() {
     setSearchKeyword(evt.target.value);
   };
 
-  // function that handles search submit, query --> userInput
+  // function that handles search: fetches articles, adds keyword parameter, sets to state
   const handleSearchSubmit = (query) => {
     setErrorOccurred(false);
     setSearchInProgress(true);
     setSearchSubmitted(true);
+    // Resetting visible card count back to 3 for new searches
+    setVisibleCount(3);
+
     getNewsArticles(query)
       .then((data) => {
-        // Attaching the search keyword to each article object
+        // Attaching the search keyword to each article object,
         const articlesWithKeyword = data.articles.map((article) => ({
           ...article,
           keyword: query,
         }));
-        console.log(articlesWithKeyword);
+
+        // Store all fetched articles in state/memory
         setNewsCards(articlesWithKeyword);
-        articlesWithKeyword.length === 0
-          ? setHasSearchResults(false)
-          : setHasSearchResults(true);
+        // set to true or false depending if length is > 0 or not.
+        setHasSearchResults(articlesWithKeyword.length > 0);
       })
       .catch((err) => {
         setErrorOccurred(true);
@@ -84,7 +91,10 @@ function App() {
         setSearchInProgress(false);
       });
   };
-
+  // update VisibleCount to show 3 more (in addition to previous 3)
+  const handleShowMore = () => {
+    setVisibleCount((prevCount) => prevCount + 3);
+  };
   // ----------USEEFFECTS----------
 
   // useEffect hook for Escape key and overlay click modal-closing features
@@ -132,23 +142,30 @@ function App() {
                     onChange={handleChange}
                     onSearch={handleSearchSubmit}
                   />
+
                   {/* When there are search results AND user is logged in */}
                   {searchInProgress && <Preloader />}
+
+                  {/* When API Error Occurs */}
                   {errorOccurred && (
-                    <p>
-                      Sorry, something went wrong during the request. Please try
-                      again later.
-                    </p>
+                    <NoResults
+                      title="Sorry, something went wrong during the request."
+                      subtitle="Please try again later."
+                    />
                   )}
-                  {/* When there are NO search results and search is submitted */}
+
+                  {/* No results found */}
                   {!hasSearchResults && searchSubmitted && !errorOccurred && (
                     <NoResults />
                   )}
-                  {/* When there are search results render NewsCardList */}
+
+                  {/* Results found */}
                   {hasSearchResults && (
                     <NewsCardList
                       newsCards={newsCards}
                       isLoggedIn={isLoggedIn}
+                      visibleCount={visibleCount}
+                      onShowMore={handleShowMore}
                     />
                   )}
 

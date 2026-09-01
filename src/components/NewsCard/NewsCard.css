@@ -1,3 +1,8 @@
+.newsCard__url {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .newsCard {
   display: flex;
   flex-direction: column;
@@ -12,10 +17,12 @@
 
 .newsCard__image-content {
   position: relative;
+  width: 400px;
   height: 272px;
-  width: 100%;
 }
 .newsCard__image {
+  min-width: 400px;
+  min-height: 272px;
   width: 100%;
   height: 100%;
   display: block;
@@ -39,10 +46,33 @@
   text-transform: uppercase;
 }
 
-.newsCard__delete-btn {
+.newsCard__btn-container {
+  display: flex;
+  gap: 5px;
   position: absolute;
   top: 24px;
   right: 24px;
+}
+
+.newsCard__btn-popup {
+  visibility: hidden;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 20px;
+}
+
+/* Targeting popup when parent container is hovered */
+.newsCard__btn-container:hover .newsCard__btn-popup {
+  opacity: 1;
+  visibility: visible;
+}
+
+.newsCard__save-btn {
   background-color: transparent;
   border: none;
   width: 40px;
@@ -51,17 +81,27 @@
   margin: 0;
 }
 
-.newsCard__delete-img {
+.newsCard__save-img {
   display: inline-block;
-  background-image: url("../../assets/delete-btn.svg");
+  background-image: url("../../assets/save-btn.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
   width: 40px;
   height: 40px;
+  border: none;
+  cursor: pointer;
+}
+
+.newsCard__save-img:hover {
+  background-image: url("../../assets/save-btn-hover.svg");
 }
 
 .newsCard__content {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-height: 304px;
   padding: 24px;
   color: #1a1b22;
 }
@@ -92,5 +132,5 @@
   line-height: 20px;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  margin: 0;
+  margin: auto 0 0 0;
 }

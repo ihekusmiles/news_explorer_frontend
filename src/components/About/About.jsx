@@ -1,9 +1,11 @@
+import authorImage from "../../assets/images/author_image.jpg";
+
 function About() {
   return (
     <section className="about">
       <img
         className="about__image"
-        src="../../src/assets/images/future_woman.jpg"
+        src={authorImage}
         alt="image"
         // frontend\src\assets\images\placeholder_image.svg
       />

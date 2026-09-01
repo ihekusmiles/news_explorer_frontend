@@ -7,7 +7,7 @@
 /* TODO: padding to 102 for saved-news page later ONLY*/
 .newsCardList__layout {
   background-color: #f5f6f7;
-  color: black;
+  color: #1a1b22;
   display: flex;
   flex-direction: column;
   padding: 62px 104px;
@@ -26,4 +26,20 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+}
+
+.newsCardList__show-more-btn {
+  font-weight: 500;
+  min-width: 288px;
+  min-height: 64px;
+  background-color: #fff;
+  padding: 20px 98px 20px 99px;
+  margin: 64px auto 18px;
+  border: none;
+  border-radius: 80px;
+  cursor: pointer;
+}
+
+.newsCardList__show-more-btn:hover {
+  background-color: #e8e8e8;
 }
