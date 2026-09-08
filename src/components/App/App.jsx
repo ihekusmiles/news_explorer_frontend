@@ -1,9 +1,7 @@
 // Importing React
-import { useEffect, useState } from "react";
+import { useEffect, useState, useNavigate } from "react";
 import { Routes, Route } from "react-router-dom";
-
-// Import mock data
-// import mockData from "../NewsCard/mockArray.json";
+import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
 
 // Importing components
 import Header from "../Header/Header";
@@ -19,8 +17,11 @@ import NewsCardList from "../NewsCardList/NewsCardList";
 
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 
 import { getNewsArticles } from "../../utils/NewsApi";
+
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function App() {
   // -----USESTATE CONSTS-----
@@ -28,6 +29,8 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   // Keep track of if users is logged in or not
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Keep track of current username
+  const [currentUser, setCurrentUser] = useState({});
 
   // keep track of whether or not search results exist
   const [hasSearchResults, setHasSearchResults] = useState(false);
@@ -43,20 +46,66 @@ function App() {
   const [searchKeyword, setSearchKeyword] = useState("");
   // Keep track of visible cards count
   const [visibleCount, setVisibleCount] = useState(3);
+  // keep track of saved articles
+  const [savedArticle, setSavedArticle] = useState([]);
 
+  // const navigate = useNavigate();
+
+  // MODAL SWITCHING HANDLERS
   // Function that opens log in modal
-  const handleLoginClick = () => {
+  const handleOpenLogin = () => {
     setActiveModal("login");
   };
+  // Function that opens sign up modal
+  const handleOpenRegister = () => {
+    setActiveModal("register");
+  };
+
+  // Function that opens confirmational modal
+  const handleOpenConfirmation = () => {
+    setActiveModal("confirmation");
+  };
+
+  // FORM SUBMISSION HANDLERS
+  const handleLoginSubmit = (credentials) => {
+    console.log("Logging in with:", credentials);
+    // Check if credentials match t he user stored in React state
+    if (currentUser && credentials.email === currentUser.email) {
+      setIsLoggedIn(true);
+      closeActiveModal();
+    } else {
+      alert("User does not exist or credentials do not match");
+    }
+
+    // Getting prevUser data and preserving
+    // the existing username
+    // or fallback to a default/email-derived name.
+    setCurrentUser((prevUser) => ({
+      ...prevUser,
+      username: prevUser.username || credentials.email.split("@")[0],
+    }));
+  };
+  const handleRegisterSubmit = (userData) => {
+    console.log("Registering user with:", userData);
+    // Storing user as an object matching context shape
+    setCurrentUser({
+      username: userData.username || "",
+      email: userData.email || "",
+    });
+
+    handleOpenConfirmation();
+  };
+
+  const handleLogOut = () => {
+    setIsLoggedIn(false);
+    setCurrentUser({});
+    setSavedArticle({});
+  };
+
   // Function that closes the active modal
   const closeActiveModal = () => {
     setActiveModal("");
   };
-  // Function that opens sign up modal
-  const handleRegisterClick = () => {
-    setActiveModal("register");
-  };
-
   // function that handles the input change event
   const handleChange = (evt) => {
     setSearchKeyword(evt.target.value);
@@ -126,85 +175,101 @@ function App() {
   }, [activeModal]);
 
   return (
-    <div className="page">
-      <div className="page__content">
-        <div className="page__background">
-          <Header isLoggedIn={isLoggedIn} handleLoginClick={handleLoginClick} />
-          <Routes>
-            {/* HOME ROUTE */}
-            <Route
-              path="/"
-              element={
-                <>
-                  <Main />
-                  <SearchForm
-                    userInput={searchKeyword}
-                    onChange={handleChange}
-                    onSearch={handleSearchSubmit}
-                  />
-
-                  {/* When there are search results AND user is logged in */}
-                  {searchInProgress && <Preloader />}
-
-                  {/* When API Error Occurs */}
-                  {errorOccurred && (
-                    <NoResults
-                      title="Sorry, something went wrong during the request."
-                      subtitle="Please try again later."
-                    />
-                  )}
-
-                  {/* No results found */}
-                  {!hasSearchResults && searchSubmitted && !errorOccurred && (
-                    <NoResults />
-                  )}
-
-                  {/* Results found */}
-                  {hasSearchResults && (
-                    <NewsCardList
-                      newsCards={newsCards}
-                      isLoggedIn={isLoggedIn}
-                      visibleCount={visibleCount}
-                      onShowMore={handleShowMore}
-                    />
-                  )}
-
-                  <About />
-                </>
-              }
+    <CurrentUserContext.Provider value={{ currentUser, isLoggedIn }}>
+      <div className="page">
+        <div className="page__content">
+          <div className="page__background">
+            <Header
+              isLoggedIn={isLoggedIn}
+              handleLoginBtnClick={handleOpenLogin}
+              handleLogOutBtnClick={handleLogOut}
             />
-            {/* SAVED NEWS ROUTE */}
-            <Route
-              path="/saved-news"
-              element={
-                <>
-                  <SavedNewsHeader />
-                  <NewsCardList
-                    newsCards={newsCards}
-                    isLoggedIn={isLoggedIn}
-                    isSavedNewsPage={true}
-                  />
-                  <About />
-                </>
-              }
-            />
-          </Routes>
+            <Routes>
+              {/* HOME ROUTE */}
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Main />
+                    <SearchForm
+                      userInput={searchKeyword}
+                      onChange={handleChange}
+                      onSearch={handleSearchSubmit}
+                    />
+
+                    {/* When there are search results AND user is logged in */}
+                    {searchInProgress && <Preloader />}
+
+                    {/* When API Error Occurs */}
+                    {errorOccurred && (
+                      <NoResults
+                        title="Sorry, something went wrong during the request."
+                        subtitle="Please try again later."
+                      />
+                    )}
+
+                    {/* No results found */}
+                    {!hasSearchResults && searchSubmitted && !errorOccurred && (
+                      <NoResults />
+                    )}
+
+                    {/* Results found */}
+                    {hasSearchResults && (
+                      <NewsCardList
+                        newsCards={newsCards}
+                        isLoggedIn={isLoggedIn}
+                        visibleCount={visibleCount}
+                        onShowMore={handleShowMore}
+                      />
+                    )}
+
+                    <About />
+                  </>
+                }
+              />
+              {/* SAVED NEWS ROUTE */}
+              <Route
+                path="/saved-news"
+                element={
+                  <ProtectedRoute>
+                    <>
+                      <SavedNewsHeader currentUser={currentUser} />
+                      <NewsCardList
+                        newsCards={newsCards}
+                        isLoggedIn={isLoggedIn}
+                        isSavedNewsPage={true}
+                      />
+                      <About />
+                    </>
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
+        <LoginModal
+          buttonText="Sign in"
+          isOpen={activeModal === "login"}
+          onClose={closeActiveModal}
+          onSwitchToRegister={handleOpenRegister}
+          onLoginSubmit={handleLoginSubmit}
+        />
+        <RegisterModal
+          buttonText="Sign up"
+          isOpen={activeModal === "register"}
+          onClose={closeActiveModal}
+          onSwitchToLogin={handleOpenLogin}
+          onRegisterSubmit={handleRegisterSubmit}
+        />
+        <ConfirmationModal
+          buttonText="Sign in"
+          isOpen={activeModal === "confirmation"}
+          onClose={closeActiveModal}
+          onSwitchToLogin={handleOpenLogin}
+        />
       </div>
-      <LoginModal
-        buttonText="Sign in"
-        isOpen={activeModal === "login"}
-        onClose={closeActiveModal}
-        onRegisterClick={handleRegisterClick}
-      />
-      <RegisterModal
-        buttonText="Sign up"
-        isOpen={activeModal === "register"}
-        onClose={closeActiveModal}
-        onLoginClick={handleLoginClick}
-      />
-    </div>
+    </CurrentUserContext.Provider>
   );
 }
 

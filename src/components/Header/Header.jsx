@@ -1,10 +1,18 @@
 import Navigation from "../Navigation/Navigation";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function Header({ isLoggedIn, handleLoginClick }) {
+function Header({ isLoggedIn, handleLoginBtnClick, handleLogOutBtnClick }) {
+  const { currentUser } = useContext(CurrentUserContext);
   const location = useLocation();
   const isSavedNews = location.pathname === "/saved-news";
+
+  // Get ahold of current user's username
+  const getCurrentUserName = () => {
+    return currentUser && currentUser.username ? currentUser.username : "";
+  };
 
   return (
     <div className={`header ${isSavedNews ? "header_theme_light" : ""}`}>
@@ -21,15 +29,16 @@ function Header({ isLoggedIn, handleLoginClick }) {
         {isLoggedIn ? (
           <button
             className={`header__logout-btn ${isSavedNews ? "header_text_dark" : ""}`}
+            onClick={handleLogOutBtnClick}
           >
-            Hector
+            {getCurrentUserName()}
             <span className="header__logout-icon" />
           </button>
         ) : (
           <button
             className="header__signin-btn"
             type="button"
-            onClick={handleLoginClick}
+            onClick={handleLoginBtnClick}
           >
             Sign in
           </button>

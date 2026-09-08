@@ -21,7 +21,12 @@ function NewsCardList({
         {/* Only render the visibleCards */}
         <div className="newsCardList__cards-container">
           {visibleCards.map((article, index) => (
-            <NewsCard key={index} article={article} />
+            <NewsCard
+              key={index}
+              article={article}
+              isSavedNewsPage={isSavedNewsPage}
+              isLoggedIn={isLoggedIn}
+            />
           ))}
         </div>
         {/* If hasMoreCards then show button */}

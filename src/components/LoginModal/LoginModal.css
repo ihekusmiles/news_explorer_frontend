@@ -18,6 +18,20 @@
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   width: 100%;
+  /* box-sizing: border-box;
+  overflow: visible; */
+}
+
+/* .modal__input_type_error {
+  color: red;
+} */
+
+.modal__error {
+  font-family: "inter";
+  font-size: 12px;
+  line-height: 100%;
+  color: red;
+  margin-top: 3px;
 }
 
 /* width: 100% on .modal__label: Forces the label container 

@@ -1,11 +1,8 @@
-// Import delete and save button images
-import deleteButton from "../../assets/delete-btn.svg";
-import deleteButton_hover from "../../assets/delete-btn-hover.svg";
-import saveButton from "../../assets/save-btn.svg";
-import saveButton_hover from "../../assets/save-btn-hover.svg";
-import saveButton_marked from "../../assets/save-btn-marked.svg";
+import { useState } from "react";
 
-function NewsCard({ article }) {
+function NewsCard({ article, isSavedNewsPage, isLoggedIn }) {
+  // Tracking saved state locally in the card
+  const [isSaved, setIsSaved] = useState(false);
   // Function to truncate long text
   const truncatedText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -22,6 +19,13 @@ function NewsCard({ article }) {
       day: "numeric",
     },
   );
+  // Prevent link nagivation when clicking save buttons
+  const handleSaveClick = (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    // Toggling saved state (false to true, true to false)
+    setIsSaved((prevState) => !prevState);
+  };
 
   return (
     <a href={article.url} className="newsCard__url">
@@ -35,13 +39,39 @@ function NewsCard({ article }) {
           />
           <p className="newsCard__image-keyword">{article.keyword}</p>
           {/* conditionally render delete btn depending on whether or not user is logged in */}
+
           <div className="newsCard__btn-container">
-            <button className="newsCard__btn-popup">
-              Sign in to save articles
-            </button>
-            <button className="newsCard__save-btn">
-              <span className="newsCard__save-img" />
-            </button>
+            {/* Show pop up if on saved news page OR if user is NOT logged in on main page */}
+            {(isSavedNewsPage || !isLoggedIn) && (
+              <button className="newsCard__btn-popup">
+                {isSavedNewsPage
+                  ? "Remove from saved"
+                  : "Sign in to save article"}
+              </button>
+            )}
+
+            {isSavedNewsPage ? (
+              <button
+                type="button"
+                className="newsCard__btn"
+                onClick={handleSaveClick}
+              >
+                <span className="newsCard__img newsCard__delete-btn-url" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={`newsCard__btn ${isLoggedIn ? "newsCard__btn-enabled" : "newsCard__btn-disabled"}`}
+                onClick={
+                  isLoggedIn ? handleSaveClick : (evt) => evt.preventDefault()
+                }
+              >
+                {/* Dynamically apply active class based on isSaved */}
+                <span
+                  className={`newsCard__img newsCard__save-btn-url ${isSaved ? "newsCard__save-btn-marked" : ""} `}
+                />
+              </button>
+            )}
           </div>
         </div>
 

@@ -56,6 +56,9 @@
 
 .newsCard__btn-popup {
   visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
   font-weight: 500;
   font-size: 12px;
   line-height: 1;
@@ -71,19 +74,22 @@
   opacity: 1;
   visibility: visible;
 }
-
-.newsCard__save-btn {
+.newsCard__btn {
   background-color: transparent;
   border: none;
-  width: 40px;
-  height: 40px;
   padding: 0;
   margin: 0;
 }
 
-.newsCard__save-img {
+.news__btn-enabled {
+  cursor: pointer;
+}
+.newsCard__btn-disabled {
+  cursor: not-allowed;
+}
+
+.newsCard__img {
   display: inline-block;
-  background-image: url("../../assets/save-btn.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -93,8 +99,24 @@
   cursor: pointer;
 }
 
-.newsCard__save-img:hover {
+.newsCard__delete-btn-url {
+  background-image: url("../../assets/delete-btn.svg");
+}
+.newsCard__delete-btn-url:hover {
+  background-image: url("../../assets/delete-btn-hover.svg");
+}
+
+.newsCard__save-btn-url {
+  background-image: url("../../assets/save-btn.svg");
+}
+.newsCard__save-btn-url:hover {
   background-image: url("../../assets/save-btn-hover.svg");
+}
+.newsCard__save-btn-marked {
+  background-image: url(../../assets/save-btn-marked.svg);
+}
+.newsCard__save-btn-marked:hover {
+  background-image: url(../../assets/save-btn-marked.svg);
 }
 
 .newsCard__content {
