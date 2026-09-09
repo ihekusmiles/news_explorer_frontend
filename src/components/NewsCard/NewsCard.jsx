@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-function NewsCard({ article, isSavedNewsPage, isLoggedIn }) {
+function NewsCard({
+  article,
+  isSavedNewsPage,
+  isLoggedIn,
+  onSaveArticle,
+  onRemoveArticle,
+}) {
   // Tracking saved state locally in the card
   const [isSaved, setIsSaved] = useState(false);
   // Function to truncate long text
@@ -23,10 +29,17 @@ function NewsCard({ article, isSavedNewsPage, isLoggedIn }) {
   const handleSaveClick = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
+
+    onSaveArticle(article);
     // Toggling saved state (false to true, true to false)
     setIsSaved((prevState) => !prevState);
   };
 
+  const handleRemoveClick = (evt) => {
+    evt.preventDefault();
+    evt.stopPropagation();
+    onRemoveArticle(article);
+  };
   return (
     <a href={article.url} className="newsCard__url">
       {" "}
@@ -54,7 +67,7 @@ function NewsCard({ article, isSavedNewsPage, isLoggedIn }) {
               <button
                 type="button"
                 className="newsCard__btn"
-                onClick={handleSaveClick}
+                onClick={handleRemoveClick}
               >
                 <span className="newsCard__img newsCard__delete-btn-url" />
               </button>

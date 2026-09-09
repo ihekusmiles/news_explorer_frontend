@@ -6,6 +6,8 @@ function NewsCardList({
   isSavedNewsPage,
   visibleCount,
   onShowMore,
+  onSaveArticle,
+  onRemoveArticle
 }) {
   const visibleCards = newsCards.slice(0, visibleCount);
   // check if there are more cards remaining to display
@@ -26,6 +28,8 @@ function NewsCardList({
               article={article}
               isSavedNewsPage={isSavedNewsPage}
               isLoggedIn={isLoggedIn}
+              onSaveArticle={onSaveArticle}
+              onRemoveArticle={onRemoveArticle}
             />
           ))}
         </div>

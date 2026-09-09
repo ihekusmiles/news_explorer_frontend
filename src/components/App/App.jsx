@@ -1,7 +1,8 @@
-// Importing React
-import { useEffect, useState, useNavigate } from "react";
+// Importing useState, Routes, utils, context
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
+import { getNewsArticles } from "../../utils/NewsApi";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 // Importing components
 import Header from "../Header/Header";
@@ -11,27 +12,22 @@ import About from "../About/About";
 import Footer from "../Footer/Footer";
 import Preloader from "../Preloader/Preloader";
 import NoResults from "../NoResults/NoResults";
-
 import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
 import NewsCardList from "../NewsCardList/NewsCardList";
-
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
-
-import { getNewsArticles } from "../../utils/NewsApi";
-
-import CurrentUserContext from "../../contexts/CurrentUserContext";
+import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   // -----USESTATE CONSTS-----
+
   // Keep trach of what modal is active/opened
   const [activeModal, setActiveModal] = useState("");
   // Keep track of if users is logged in or not
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // Keep track of current username
   const [currentUser, setCurrentUser] = useState({});
-
   // keep track of whether or not search results exist
   const [hasSearchResults, setHasSearchResults] = useState(false);
   // Keep track of whether or not search is currently in progress
@@ -47,9 +43,7 @@ function App() {
   // Keep track of visible cards count
   const [visibleCount, setVisibleCount] = useState(3);
   // keep track of saved articles
-  const [savedArticle, setSavedArticle] = useState([]);
-
-  // const navigate = useNavigate();
+  const [savedArticles, setSavedArticles] = useState([]);
 
   // MODAL SWITCHING HANDLERS
   // Function that opens log in modal
@@ -69,13 +63,16 @@ function App() {
   // FORM SUBMISSION HANDLERS
   const handleLoginSubmit = (credentials) => {
     console.log("Logging in with:", credentials);
-    // Check if credentials match t he user stored in React state
-    if (currentUser && credentials.email === currentUser.email) {
-      setIsLoggedIn(true);
-      closeActiveModal();
-    } else {
-      alert("User does not exist or credentials do not match");
-    }
+    setIsLoggedIn(true);
+    closeActiveModal();
+
+    // For testing purposes: Check if credentials match the user stored in React state
+    // if (currentUser && credentials.email === currentUser.email) {
+    //   setIsLoggedIn(true);
+    //   closeActiveModal();
+    // } else {
+    //   alert("User does not exist or credentials do not match");
+    // }
 
     // Getting prevUser data and preserving
     // the existing username
@@ -99,7 +96,7 @@ function App() {
   const handleLogOut = () => {
     setIsLoggedIn(false);
     setCurrentUser({});
-    setSavedArticle({});
+    setSavedArticle([]);
   };
 
   // Function that closes the active modal
@@ -144,6 +141,27 @@ function App() {
   const handleShowMore = () => {
     setVisibleCount((prevCount) => prevCount + 3);
   };
+  // Function that handles saved articles
+  const handleSaveArticle = (articleToSave) => {
+    // Checking if article is already saved to prevent duplicates
+    // Reads: If this item is NOT already inside savedArticles then add it
+    if (!savedArticles.some((item) => item.url === articleToSave.url)) {
+      // Using the functional state updater to safely append/add the new article
+      setSavedArticles((prevSaved) => [...prevSaved, articleToSave]);
+    } else {
+      alert(`Article is already saved.`);
+    }
+  };
+
+  // Function that removes a saved article
+  const handleRemoveArticle = (articleToRemove) => {
+    const filteredArray = savedArticles.filter(
+      (item) => item.url !== articleToRemove.url,
+    );
+    setSavedArticles(filteredArray);
+    alert("Article has been removed");
+  };
+
   // ----------USEEFFECTS----------
 
   // useEffect hook for Escape key and overlay click modal-closing features
@@ -220,6 +238,8 @@ function App() {
                         isLoggedIn={isLoggedIn}
                         visibleCount={visibleCount}
                         onShowMore={handleShowMore}
+                        onSaveArticle={handleSaveArticle}
+                        onRemoveArticle={handleRemoveArticle}
                       />
                     )}
 
@@ -235,9 +255,11 @@ function App() {
                     <>
                       <SavedNewsHeader currentUser={currentUser} />
                       <NewsCardList
-                        newsCards={newsCards}
+                        newsCards={savedArticles}
                         isLoggedIn={isLoggedIn}
                         isSavedNewsPage={true}
+                        onSaveArticle={handleSaveArticle}
+                        onRemoveArticle={handleRemoveArticle}
                       />
                       <About />
                     </>
