@@ -38,8 +38,6 @@ function App() {
   const [errorOccurred, setErrorOccurred] = useState(false);
   // Set articles (newsCards) to memory
   const [newsCards, setNewsCards] = useState([]);
-  // Storing user's search input into state
-  const [searchKeyword, setSearchKeyword] = useState("");
   // Keep track of visible cards count
   const [visibleCount, setVisibleCount] = useState(3);
   // keep track of saved articles
@@ -96,16 +94,12 @@ function App() {
   const handleLogOut = () => {
     setIsLoggedIn(false);
     setCurrentUser({});
-    setSavedArticle([]);
+    setSavedArticles([]);
   };
 
   // Function that closes the active modal
   const closeActiveModal = () => {
     setActiveModal("");
-  };
-  // function that handles the input change event
-  const handleChange = (evt) => {
-    setSearchKeyword(evt.target.value);
   };
 
   // function that handles search: fetches articles, adds keyword parameter, sets to state
@@ -209,11 +203,7 @@ function App() {
                 element={
                   <>
                     <Main />
-                    <SearchForm
-                      userInput={searchKeyword}
-                      onChange={handleChange}
-                      onSearch={handleSearchSubmit}
-                    />
+                    <SearchForm onSearch={handleSearchSubmit} />
 
                     {/* When there are search results AND user is logged in */}
                     {searchInProgress && <Preloader />}
@@ -240,6 +230,7 @@ function App() {
                         onShowMore={handleShowMore}
                         onSaveArticle={handleSaveArticle}
                         onRemoveArticle={handleRemoveArticle}
+                        savedArticles={savedArticles}
                       />
                     )}
 
@@ -253,7 +244,10 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <>
-                      <SavedNewsHeader currentUser={currentUser} />
+                      <SavedNewsHeader
+                        currentUser={currentUser}
+                        savedArticles={savedArticles}
+                      />
                       <NewsCardList
                         newsCards={savedArticles}
                         isLoggedIn={isLoggedIn}

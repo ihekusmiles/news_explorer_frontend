@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 
-function SearchForm({ userInput, onChange, onSearch }) {
+function SearchForm({ onSearch }) {
   const { values, handleChange } = useForm({ q: "" });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -16,8 +16,6 @@ function SearchForm({ userInput, onChange, onSearch }) {
     // Clearing error message and triggering search request
     setErrorMessage("");
     onSearch(values.q);
-
-    // onSearch(userInput);
   };
   return (
     <search>

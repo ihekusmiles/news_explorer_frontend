@@ -6,17 +6,9 @@ function NewsCard({
   isLoggedIn,
   onSaveArticle,
   onRemoveArticle,
+  savedArticles,
 }) {
-  // Tracking saved state locally in the card
-  const [isSaved, setIsSaved] = useState(false);
-  // Function to truncate long text
-  const truncatedText = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.slice(0, maxLength) + "";
-    }
-    return text;
-  };
-
+  // Format date to match required date format
   const formattedDate = new Date(article.publishedAt).toLocaleDateString(
     "en-US",
     {
@@ -25,21 +17,36 @@ function NewsCard({
       day: "numeric",
     },
   );
+
+  // Checking saved status dynamically
+  const isSaved = savedArticles.some((item) => item.url === article.url);
+  // Function to truncate long text
+  const truncatedText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength) + "";
+    }
+    return text;
+  };
+
   // Prevent link nagivation when clicking save buttons
   const handleSaveClick = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
-
-    onSaveArticle(article);
-    // Toggling saved state (false to true, true to false)
-    setIsSaved((prevState) => !prevState);
+    // Toggling saved state depending on whether it's currently saved
+    if (isSaved) {
+      onRemoveArticle(article);
+    } else {
+      onSaveArticle(article);
+    }
   };
 
+  // Handling remove click
   const handleRemoveClick = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
     onRemoveArticle(article);
   };
+
   return (
     <a href={article.url} className="newsCard__url">
       {" "}
