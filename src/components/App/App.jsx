@@ -1,8 +1,13 @@
 // Importing useState, Routes, utils, context
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { getNewsArticles } from "../../utils/NewsApi";
+import { getNewsArticles } from "../../utils/api";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+
+// Importing API consts
+
+import { saveArticle, removeArticle, getItems } from "../../utils/api";
+import * as auth from "../../utils/auth";
 
 // Importing components
 import Header from "../Header/Header";
@@ -58,37 +63,69 @@ function App() {
     setActiveModal("confirmation");
   };
 
-  // FORM SUBMISSION HANDLERS
-  const handleLoginSubmit = (credentials) => {
-    console.log("Logging in with:", credentials);
-    setIsLoggedIn(true);
-    closeActiveModal();
-
-    // For testing purposes: Check if credentials match the user stored in React state
-    // if (currentUser && credentials.email === currentUser.email) {
-    //   setIsLoggedIn(true);
-    //   closeActiveModal();
-    // } else {
-    //   alert("User does not exist or credentials do not match");
-    // }
-
-    // Getting prevUser data and preserving
-    // the existing username
-    // or fallback to a default/email-derived name.
-    setCurrentUser((prevUser) => ({
-      ...prevUser,
-      username: prevUser.username || credentials.email.split("@")[0],
-    }));
+  // TOKEN CONSTANTS
+  const TOKEN_KEY = "jwt";
+  const setToken = (token) => localStorage.setItem(TOKEN_KEY, token);
+  const getToken = () => {
+    return localStorage.getItem(TOKEN_KEY);
   };
-  const handleRegisterSubmit = (userData) => {
-    console.log("Registering user with:", userData);
-    // Storing user as an object matching context shape
-    setCurrentUser({
-      username: userData.username || "",
-      email: userData.email || "",
-    });
+  const removeToken = () => {
+    localStorage.removeItem(TOKEN_KEY);
+  };
 
-    handleOpenConfirmation();
+  // Handle login submit with simulation
+  const handleLoginSubmit = (email, password) => {
+    if (!email || !password) {
+      return;
+    }
+    auth
+      .authorize(email, password)
+      .then((data) => {
+        console.log(data);
+        if (data.token) {
+          setToken(data.token); // Saving token to local storage
+          return auth.checkToken(data.token); // Immediately fetch users info using the new token
+        }
+      })
+
+      .then((userData) => {
+        setCurrentUser({
+          username: userData.data.name || userData.data.email.split("@")[0],
+          email: userData.data.email,
+          _id: userData.data._id,
+        });
+        // After successful authorization set loggedIn state to true and close modal;
+        setIsLoggedIn(true);
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
+  // Handle register with simulation
+  const handleRegisterSubmit = (email, password, name) => {
+    console.log("Submitted:", email, password, name); // DEBUGGING
+    auth
+      .register(email, password, name)
+      .then((data) => {
+        console.log(data); // DEBUGGING
+        if (data.token) {
+          setToken(data.token);
+          return auth.checkToken(data.token);
+        }
+      })
+      .then((userData) => {
+        console.log(userData); // DEBUGGING
+        console.log(userData.data.name, userData.data.email, userData.data._id); // DEBUGGIN
+        setCurrentUser({
+          username: userData.data.name || userData.data.email.split("@")[0],
+          email: userData.data.email || "",
+          _id: userData.data._id,
+        });
+        handleOpenConfirmation();
+      })
+      .catch((error) => {
+        console.error("Registration failed", error);
+      });
   };
 
   const handleLogOut = () => {
@@ -118,6 +155,8 @@ function App() {
           keyword: query,
         }));
 
+        console.log(articlesWithKeyword);
+
         // Store all fetched articles in state/memory
         setNewsCards(articlesWithKeyword);
         // set to true or false depending if length is > 0 or not.
@@ -135,13 +174,19 @@ function App() {
   const handleShowMore = () => {
     setVisibleCount((prevCount) => prevCount + 3);
   };
+
   // Function that handles saved articles
   const handleSaveArticle = (articleToSave) => {
     // Checking if article is already saved to prevent duplicates
     // Reads: If this item is NOT already inside savedArticles then add it
     if (!savedArticles.some((item) => item.url === articleToSave.url)) {
-      // Using the functional state updater to safely append/add the new article
-      setSavedArticles((prevSaved) => [...prevSaved, articleToSave]);
+      // Updating state with resolved data (including backend _id)
+      saveArticle(articleToSave)
+        .then((savedArticleWithId) => {
+          // Using the functional state updater to safely append/add the new article
+          setSavedArticles((prevSaved) => [...prevSaved, savedArticleWithId]);
+        })
+        .catch((err) => console.log("Failed to save article:", err));
     } else {
       alert(`Article is already saved.`);
     }
@@ -149,11 +194,13 @@ function App() {
 
   // Function that removes a saved article
   const handleRemoveArticle = (articleToRemove) => {
-    const filteredArray = savedArticles.filter(
-      (item) => item.url !== articleToRemove.url,
-    );
-    setSavedArticles(filteredArray);
-    alert("Article has been removed");
+    removeArticle(articleToRemove)
+      .then(() => {
+        setSavedArticles((prevSaved) =>
+          prevSaved.filter((item) => item.url !== articleToRemove.url),
+        );
+      })
+      .catch((err) => console.log("Failed to remove article:", err));
   };
 
   // ----------USEEFFECTS----------
@@ -185,6 +232,39 @@ function App() {
     };
     // run useEffect only when activeModal changes, hence adding the dependency
   }, [activeModal]);
+
+  // useEffect to simulate saved items to load when app mounts
+  useEffect(() => {
+    getItems()
+      .then((articles) => setSavedArticles(articles))
+      .catch((err) => console.log("Failed to load saved items:", err));
+  }, []);
+
+  // useEffect hook to check if there is a token in localStorage on PAGE REFRESH
+  useEffect(() => {
+    const jwt = getToken();
+
+    if (!jwt) {
+      return;
+    }
+
+    auth
+      .checkToken(jwt)
+      .then((data) => {
+        const userData = data.data ? data.data : data;
+        setIsLoggedIn(true);
+        setCurrentUser({
+          username: userData.name || userData.email.split("@")[0],
+          email: userData.email || "",
+          _id: userData._id,
+        });
+      })
+      .catch((error) => {
+        console.error("Token check failed:", error);
+        // Clean up on failure
+        removeToken();
+      });
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, isLoggedIn }}>
