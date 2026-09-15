@@ -5,6 +5,7 @@ function NewsCardList({
   isLoggedIn,
   isSavedNewsPage,
   visibleCount,
+  onSaveBtnClick,
   onShowMore,
   onSaveArticle,
   onRemoveArticle,
@@ -31,6 +32,7 @@ function NewsCardList({
               isLoggedIn={isLoggedIn}
               onSaveArticle={onSaveArticle}
               onRemoveArticle={onRemoveArticle}
+              openLoginModal={onSaveBtnClick}
               savedArticles={savedArticles}
             />
           ))}

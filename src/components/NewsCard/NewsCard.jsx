@@ -4,6 +4,7 @@ function NewsCard({
   isLoggedIn,
   onSaveArticle,
   onRemoveArticle,
+  openLoginModal,
   savedArticles,
 }) {
   // Format date to match required date format
@@ -80,9 +81,7 @@ function NewsCard({
               <button
                 type="button"
                 className={`newsCard__btn ${isLoggedIn ? "newsCard__btn-enabled" : "newsCard__btn-disabled"}`}
-                onClick={
-                  isLoggedIn ? handleSaveClick : (evt) => evt.preventDefault()
-                }
+                onClick={isLoggedIn ? handleSaveClick : openLoginModal}
               >
                 {/* Dynamically apply active class based on isSaved */}
                 <span

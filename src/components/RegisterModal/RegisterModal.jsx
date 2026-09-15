@@ -28,7 +28,6 @@ function RegisterModal({
   // !"" evaluates to true, !"secret" evaluates to false, "" is considered falsy
   // Password validation helper (returns true or false)
   const isPasswordValid = (password) => {
-    console.log(values.password);
     const trimmedPassword = password.trim();
     // If the trimmed password is empty
     if (!trimmedPassword) {
@@ -78,13 +77,6 @@ function RegisterModal({
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
-    // // Running final validations before submitting
-    // const isEmailValid = validateEmail(values.email);
-
-    // // Validate email before sending request
-    // if (!isEmailValid) {
-    //   setEmailError("Please enter a valid e-mail")};
 
     if (isFormValid && onRegisterSubmit) {
       onRegisterSubmit(values);

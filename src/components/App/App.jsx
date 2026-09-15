@@ -23,6 +23,7 @@ import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
+import PreLoader from "../Preloader/Preloader";
 
 function App() {
   // -----USESTATE CONSTS-----
@@ -47,10 +48,13 @@ function App() {
   const [visibleCount, setVisibleCount] = useState(3);
   // keep track of saved articles
   const [savedArticles, setSavedArticles] = useState([]);
+  // Track token verification process on initial load
+  const [isCheckingToken, setIsCheckingToken] = useState(true);
 
   // MODAL SWITCHING HANDLERS
   // Function that opens log in modal
-  const handleOpenLogin = () => {
+  const handleOpenLogin = (evt) => {
+    evt.preventDefault();
     setActiveModal("login");
   };
   // Function that opens sign up modal
@@ -74,14 +78,15 @@ function App() {
   };
 
   // Handle login submit with simulation
-  const handleLoginSubmit = (email, password) => {
+  const handleLoginSubmit = ({ email, password } = {}) => {
     if (!email || !password) {
+      console.warn("Email or password missing:", { email, password });
       return;
     }
     auth
       .authorize(email, password)
       .then((data) => {
-        console.log(data);
+        console.log("Authorize response:", data); // DEBUGGING
         if (data.token) {
           setToken(data.token); // Saving token to local storage
           return auth.checkToken(data.token); // Immediately fetch users info using the new token
@@ -89,6 +94,7 @@ function App() {
       })
 
       .then((userData) => {
+        console.log("User data from checkToken:", userData); // DEBUGGING
         setCurrentUser({
           username: userData.data.name || userData.data.email.split("@")[0],
           email: userData.data.email,
@@ -97,8 +103,15 @@ function App() {
         // After successful authorization set loggedIn state to true and close modal;
         setIsLoggedIn(true);
         closeActiveModal();
+        // Get/fetch articles right after logging in
+        return getItems();
       })
-      .catch(console.error);
+      .then((articles) => {
+        if (articles) {
+          setSavedArticles(articles);
+        }
+      })
+      .catch((err) => console.error("Login failed:", err));
   };
 
   // Handle register with simulation
@@ -128,10 +141,13 @@ function App() {
       });
   };
 
+  // Handle logging out
   const handleLogOut = () => {
     setIsLoggedIn(false);
     setCurrentUser({});
     setSavedArticles([]);
+    // clear session state accross reloads
+    removeToken();
   };
 
   // Function that closes the active modal
@@ -245,6 +261,7 @@ function App() {
     const jwt = getToken();
 
     if (!jwt) {
+      setIsCheckingToken(false);
       return;
     }
 
@@ -263,8 +280,16 @@ function App() {
         console.error("Token check failed:", error);
         // Clean up on failure
         removeToken();
+      })
+      .finally(() => {
+        setIsCheckingToken(false);
       });
   }, []);
+
+  // Preventing routing evaluation until the token check has finished
+  if (isCheckingToken) {
+    return <PreLoader />;
+  }
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, isLoggedIn }}>
@@ -307,6 +332,7 @@ function App() {
                         newsCards={newsCards}
                         isLoggedIn={isLoggedIn}
                         visibleCount={visibleCount}
+                        onSaveBtnClick={handleOpenLogin}
                         onShowMore={handleShowMore}
                         onSaveArticle={handleSaveArticle}
                         onRemoveArticle={handleRemoveArticle}

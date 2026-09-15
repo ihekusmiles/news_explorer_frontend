@@ -11,7 +11,7 @@ export const register = (email, password, name) => {
     resolve({
       name: "fakeuser",
       email: "fake@user.com",
-      _id: "fake-id",
+      _id: "fakeidQWERTY",
       token: "1234567890TOKEN",
     });
   });
@@ -24,8 +24,8 @@ export const checkToken = (token) => {
     resolve({
       data: {
         name: "Hector",
-        email: "hrobles@buffalo.edu",
-        _id: "123456789qwertID",
+        email: "aitekerayu@email.com",
+        _id: "123456789qwertyID",
       },
     });
   });
