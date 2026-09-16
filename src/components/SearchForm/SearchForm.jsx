@@ -37,7 +37,6 @@ function SearchForm({ onSearch }) {
             if (errorMessage) setErrorMessage("");
           }}
         />
-        // Show error message only when there is
         {errorMessage && (
           <span className="searchform__error">{errorMessage}</span>
         )}

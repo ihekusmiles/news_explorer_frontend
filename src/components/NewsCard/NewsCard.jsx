@@ -17,15 +17,18 @@ function NewsCard({
     },
   );
 
+  // Helper function to strip away HTML tags from string text
+  const cleanText = (text) => {
+    if (!text) return "";
+    return text
+      .replace(/<[^>]*>/g, "") // Removes all HTML tags like <ul>, <li>, </li>
+      .replace(/\s+/g, " ") // Replaces multiple white spaces/newlines with a single space
+      .replace(/\[\+\d+ chars\]/g, "") // Removes [+ chars]
+      .trim();
+  };
+
   // Checking saved status dynamically
   const isSaved = savedArticles.some((item) => item.url === article.url);
-  // Function to truncate long text
-  const truncatedText = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.slice(0, maxLength) + "";
-    }
-    return text;
-  };
 
   // Prevent link nagivation when clicking save buttons
   const handleSaveClick = (evt) => {
@@ -94,13 +97,11 @@ function NewsCard({
 
         <div className="newsCard__content">
           <p className="newsCard__date">{formattedDate}</p>
-          <p className="newsCard__heading">
-            {truncatedText(article.title, 40)}
+          <p className="newsCard__heading">{article.title}</p>
+          <p className="newsCard__text">{cleanText(article.content)}</p>
+          <p className="newsCard__source">
+            {article.source?.name || article.source}
           </p>
-          <p className="newsCard__text">
-            {truncatedText(article.content, 200)}
-          </p>
-          <p className="newsCard__source">{article.source.name}</p>
         </div>
       </div>
     </a>

@@ -45,3 +45,9 @@
 .footer__list-item {
   list-style-type: none;
 }
+
+@media screen and (max-width: 820px) {
+  .footer {
+    padding: 24px 40px 18px;
+  }
+}

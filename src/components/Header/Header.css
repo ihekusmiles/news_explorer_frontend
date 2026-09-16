@@ -47,6 +47,9 @@
   height: 24px;
   background-image: url("../../assets/logout.svg");
 }
+.header__logout-white-icon {
+  background-image: url("../../assets/logout_white.svg");
+}
 
 .header__signin-btn {
   align-self: center;
@@ -60,4 +63,18 @@
   padding: 12px 0;
   margin: 19px 116px 13px 54px;
   cursor: pointer;
+}
+
+@media screen and (max-width: 820px) {
+  .header__logo {
+    margin: 22px auto 18px 40px;
+  }
+  .header__logout-btn {
+    padding: 8px 12px;
+    margin: 14px 40px 12px 16px;
+  }
+  .header__signin-btn {
+    font-size: 16px;
+    margin: 14px 40px 12px 16px;
+  }
 }

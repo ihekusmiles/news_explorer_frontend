@@ -25,6 +25,7 @@
 .newsCardList__cards-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
 }
 
@@ -42,4 +43,27 @@
 
 .newsCardList__show-more-btn:hover {
   background-color: #e8e8e8;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 820px) {
+  .newsCardList__layout {
+    padding: 40px;
+  }
+  .newsCardList__cards-container {
+    gap: 8px;
+  }
+  .newsCardList__title {
+    font-size: 30px;
+    line-height: 34px;
+    margin: 0 auto 32px 10px;
+  }
+
+  .newsCardList__show-more-btn {
+    min-width: 240px;
+    min-height: 56px;
+    padding: 16px 74px 16px 75px;
+    margin: 32px auto 0px;
+  }
 }

@@ -19,7 +19,7 @@ function NewsCardList({
     <>
       <div className="newsCardList__layout">
         {/* Render search results only on home page */}
-        {isLoggedIn && !isSavedNewsPage && (
+        {!isSavedNewsPage && (
           <p className="newsCardList__title">Search results</p>
         )}
         {/* Only render the visibleCards */}

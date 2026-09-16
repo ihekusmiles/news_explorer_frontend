@@ -32,7 +32,9 @@ function Header({ isLoggedIn, handleLoginBtnClick, handleLogOutBtnClick }) {
             onClick={handleLogOutBtnClick}
           >
             {getCurrentUserName()}
-            <span className="header__logout-icon" />
+            <span
+              className={`header__logout-icon ${!isSavedNews ? "header__logout-white-icon" : ""}`}
+            />
           </button>
         ) : (
           <button

@@ -5,7 +5,6 @@ import { getNewsArticles } from "../../utils/api";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 // Importing API consts
-
 import { saveArticle, removeArticle, getItems } from "../../utils/api";
 import * as auth from "../../utils/auth";
 
@@ -86,7 +85,6 @@ function App() {
     auth
       .authorize(email, password)
       .then((data) => {
-        console.log("Authorize response:", data); // DEBUGGING
         if (data.token) {
           setToken(data.token); // Saving token to local storage
           return auth.checkToken(data.token); // Immediately fetch users info using the new token
@@ -94,7 +92,6 @@ function App() {
       })
 
       .then((userData) => {
-        console.log("User data from checkToken:", userData); // DEBUGGING
         setCurrentUser({
           username: userData.data.name || userData.data.email.split("@")[0],
           email: userData.data.email,
@@ -116,19 +113,15 @@ function App() {
 
   // Handle register with simulation
   const handleRegisterSubmit = (email, password, name) => {
-    console.log("Submitted:", email, password, name); // DEBUGGING
     auth
       .register(email, password, name)
       .then((data) => {
-        console.log(data); // DEBUGGING
         if (data.token) {
           setToken(data.token);
           return auth.checkToken(data.token);
         }
       })
       .then((userData) => {
-        console.log(userData); // DEBUGGING
-        console.log(userData.data.name, userData.data.email, userData.data._id); // DEBUGGIN
         setCurrentUser({
           username: userData.data.name || userData.data.email.split("@")[0],
           email: userData.data.email || "",
@@ -170,9 +163,6 @@ function App() {
           ...article,
           keyword: query,
         }));
-
-        console.log(articlesWithKeyword);
-
         // Store all fetched articles in state/memory
         setNewsCards(articlesWithKeyword);
         // set to true or false depending if length is > 0 or not.
