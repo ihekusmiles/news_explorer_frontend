@@ -72,3 +72,24 @@
     line-height: 40px;
   }
 }
+
+@media screen and (max-width: 530px) {
+  .about {
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 24px 128px;
+    gap: 32px;
+  }
+  .about__image {
+    height: 272px;
+    width: 272px;
+    margin: 0px;
+  }
+  .about__container {
+    margin: 0;
+  }
+  .about__title-text {
+    font-size: 30px;
+    line-height: 40px;
+  }
+}

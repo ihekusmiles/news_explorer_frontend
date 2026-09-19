@@ -39,3 +39,27 @@
     padding: 26px 0 24px 0;
   }
 }
+
+@media screen and (max-width: 530px) {
+  .navigation {
+    padding-top: 20px;
+  }
+  .navigation__link {
+    font-size: 18px;
+    line-height: 56px;
+    text-decoration: none;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+  }
+  .navigation__link_active {
+    border: none;
+  }
+  .navigation__link_theme_dark.navigation__link_active {
+    border: none;
+  }
+}

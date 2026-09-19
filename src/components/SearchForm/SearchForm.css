@@ -79,3 +79,26 @@ input:-webkit-autofill:active {
     padding: 16px 52px;
   }
 }
+
+@media screen and (max-width: 530px) {
+  .searchform__container {
+    max-width: 288px;
+    max-height: 56px;
+    margin: 0 auto 104px;
+  }
+
+  .searchform__input {
+    padding: 0px;
+    margin-left: 24px;
+    min-width: 288px;
+    min-height: 56px;
+  }
+  .searchform__btn {
+    position: absolute;
+    top: 70px;
+    left: 0px;
+    min-width: 288px;
+    min-height: 56px;
+    padding: 16px 52px;
+  }
+}

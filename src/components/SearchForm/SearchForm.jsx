@@ -19,6 +19,7 @@ function SearchForm({ onSearch }) {
   };
   return (
     <search>
+      {}
       <form
         className="searchform__container"
         onSubmit={handleSubmit}

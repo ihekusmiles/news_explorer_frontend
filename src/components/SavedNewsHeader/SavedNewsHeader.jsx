@@ -29,6 +29,7 @@ function SavedNewsHeader({ currentUser, savedArticles }) {
         <p className="savedNewsHeader__content-text">
           {`${currentUser.username || "User"}, you have ${savedArticles.length} saved`}
           <span className="savedNewsHeader__text-break-line">
+            {" "}
             {articleText}
           </span>
         </p>

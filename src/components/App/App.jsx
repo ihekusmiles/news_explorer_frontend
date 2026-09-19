@@ -50,10 +50,20 @@ function App() {
   // Track token verification process on initial load
   const [isCheckingToken, setIsCheckingToken] = useState(true);
 
+  // TOKEN CONSTANTS
+  const TOKEN_KEY = "jwt";
+  const setToken = (token) => localStorage.setItem(TOKEN_KEY, token);
+  const getToken = () => {
+    return localStorage.getItem(TOKEN_KEY);
+  };
+  const removeToken = () => {
+    localStorage.removeItem(TOKEN_KEY);
+  };
+
   // MODAL SWITCHING HANDLERS
   // Function that opens log in modal
-  const handleOpenLogin = (evt) => {
-    evt.preventDefault();
+  const handleOpenLogin = () => {
+    // evt.preventDefault();
     setActiveModal("login");
   };
   // Function that opens sign up modal
@@ -64,16 +74,6 @@ function App() {
   // Function that opens confirmational modal
   const handleOpenConfirmation = () => {
     setActiveModal("confirmation");
-  };
-
-  // TOKEN CONSTANTS
-  const TOKEN_KEY = "jwt";
-  const setToken = (token) => localStorage.setItem(TOKEN_KEY, token);
-  const getToken = () => {
-    return localStorage.getItem(TOKEN_KEY);
-  };
-  const removeToken = () => {
-    localStorage.removeItem(TOKEN_KEY);
   };
 
   // Handle login submit with simulation
@@ -163,20 +163,23 @@ function App() {
           ...article,
           keyword: query,
         }));
-        // Store all fetched articles in state/memory
-        setNewsCards(articlesWithKeyword);
-        // set to true or false depending if length is > 0 or not.
-        setHasSearchResults(articlesWithKeyword.length > 0);
+        // Increasing preloader loading time with setTimeout by 2s
+        setTimeout(() => {
+          // Store all fetched articles in state/memory
+          setNewsCards(articlesWithKeyword);
+          // set to true or false depending if length is > 0 or not.
+          setHasSearchResults(articlesWithKeyword.length > 0);
+          setSearchInProgress(false);
+        }, 2000);
       })
       .catch((err) => {
         setErrorOccurred(true);
-        console.error("Failed to fetch news:", err);
-      })
-      .finally(() => {
         setSearchInProgress(false);
+        console.error("Failed to fetch news:", err);
       });
   };
-  // update VisibleCount to show 3 more (in addition to previous 3)
+
+  // Updating VisibleCount to show 3 more (in addition to previous 3)
   const handleShowMore = () => {
     setVisibleCount((prevCount) => prevCount + 3);
   };
@@ -351,7 +354,6 @@ function App() {
                         onSaveArticle={handleSaveArticle}
                         onRemoveArticle={handleRemoveArticle}
                       />
-                      <About />
                     </>
                   </ProtectedRoute>
                 }

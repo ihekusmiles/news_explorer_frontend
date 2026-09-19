@@ -1,12 +1,13 @@
 .header {
+  position: relative;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
+  /* z-index: 10; */
 }
 
 .header_theme_light {
-  /* color: black; */
   background-color: white;
 }
 
@@ -40,15 +41,22 @@
 .header_text_dark {
   color: black;
 }
+
+.header__menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 16px;
+  z-index: 20;
+}
+
 .header__logout-icon {
   display: inline-block;
   margin-left: 14px;
   width: 24px;
   height: 24px;
-  background-image: url("../../assets/logout.svg");
-}
-.header__logout-white-icon {
-  background-image: url("../../assets/logout_white.svg");
 }
 
 .header__signin-btn {
@@ -76,5 +84,63 @@
   .header__signin-btn {
     font-size: 16px;
     margin: 14px 40px 12px 16px;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .header_menu-opened {
+    background-color: #1a1b22;
+  }
+  .header__menu-btn {
+    display: block;
+    margin-right: 16px;
+  }
+  .header__logo {
+    font-size: 16px;
+    margin: 16px auto 16px 16px;
+    z-index: 20;
+  }
+  .header__mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #1a1b22;
+    border-top: 1px solid rgba(196, 196, 196, 0.2);
+    border-bottom: 1px solid rgba(196, 196, 196, 0.2);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 15;
+    padding: 16px 16px 24px 16px;
+  }
+
+  .header_theme_light .header__mobile-menu {
+    background-color: white;
+    border-bottom: 1px solid #d1d2d6;
+  }
+  .header_theme_light.header_menu-opened {
+    background-color: #fff;
+  }
+
+  .header__mobile-menu_opened {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .header__mobile-content {
+    display: flex;
+    flex-direction: column;
+    /* tweak later */
+    /* align-items: center; */
+    gap: 22px;
+  }
+
+  .header__signin-btn,
+  .header__logout-btn {
+    margin: 0;
+    padding: 16px 116px 16px 117px;
+    width: 100%;
+    max-width: 288px;
+    justify-content: center;
   }
 }

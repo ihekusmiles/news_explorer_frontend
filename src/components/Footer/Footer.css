@@ -51,3 +51,18 @@
     padding: 24px 40px 18px;
   }
 }
+
+@media screen and (max-width: 530px) {
+  .footer {
+    flex-direction: column-reverse;
+    gap: 38px;
+    padding: 20px 16px 22px;
+  }
+  .footer__page-links {
+    flex-direction: column;
+    gap: 25px;
+  }
+  .footer__socialmedia-links {
+    align-items: start;
+  }
+}

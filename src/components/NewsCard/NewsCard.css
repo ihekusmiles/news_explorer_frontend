@@ -219,3 +219,43 @@
     margin-top: auto;
   }
 }
+
+@media screen and (max-width: 530px) {
+  .newsCard {
+    max-width: 288px;
+    height: 440px;
+    border-radius: 16px;
+  }
+  .newsCard__image-content {
+    width: 288px;
+    height: 196px;
+  }
+  .newsCard__image {
+    min-width: 288px;
+    min-height: 196px;
+  }
+
+  .newsCard__btn-container {
+    top: 16px;
+    right: 16px;
+  }
+
+  .newsCard__image-keyword {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+  }
+
+  .newsCard__content {
+    min-height: 244px;
+  }
+  .newsCard__heading {
+    margin: 10px 0 14px;
+  }
+
+  .newsCard__source {
+    line-height: 20px;
+    letter-spacing: 0.4px;
+    margin-top: auto;
+  }
+}
