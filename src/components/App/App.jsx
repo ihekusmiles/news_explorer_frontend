@@ -173,9 +173,9 @@ function App() {
         }, 2000);
       })
       .catch((err) => {
+        console.error("Failed to fetch news:", err);
         setErrorOccurred(true);
         setSearchInProgress(false);
-        console.error("Failed to fetch news:", err);
       });
   };
 

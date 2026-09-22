@@ -18,11 +18,9 @@ This project delivers an interactive news aggregation platform designed to deliv
 
 ## Project links
 
-- [Frontend Repository link to the project](https://github.com/ihekusmiles/se_project_react)
-
-Check out [this video](VIDEO LINK HERE) where I describe and showcase the News Explorer project and explain some technologies used.
-
-- [Github Page link to the project](https://github.com/ihekusmiles/news_explorer_frontend)
+- [Frontend Repository link to the project](https://github.com/ihekusmiles/news_explorer_frontend)
+- [Github Page link to the project](https://ihekusmiles.github.io/news_explorer_frontend/)
+- Check out [this video](https://www.loom.com/share/96b6fadb197945f584ff65d668c39f69) where I describe and showcase the News Explorer project and explain some technologies used.
 
 ## Project Description
 

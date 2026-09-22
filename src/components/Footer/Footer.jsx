@@ -1,3 +1,5 @@
+import githubIcon from "../../assets/github.svg";
+import linkedinIcon from "../../assets/linkedin.svg";
 import { Link } from "react-router-dom";
 
 function Footer() {
@@ -22,7 +24,7 @@ function Footer() {
                 className="footer__link-icon"
               >
                 <img
-                  src="../../src/assets/github.svg"
+                  src={githubIcon}
                   alt="GitHub icon"
                   className="footer__social-icon"
                 />
@@ -34,7 +36,7 @@ function Footer() {
                 className="footer__link-icon"
               >
                 <img
-                  src="../../src/assets/linkedin.svg"
+                  src={linkedinIcon}
                   alt="TripleTen icon"
                   className="footer__social-icon"
                 />

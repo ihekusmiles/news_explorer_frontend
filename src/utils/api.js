@@ -1,5 +1,10 @@
 const apiKey = "0b96891b74f04ac3b3428877d08e8a9a";
-const baseURL = "https://newsapi.org/v2/everything";
+
+// Using a ternary operator to handle bypass restriction when in production mode;
+const baseURL =
+  process.env.NODE_ENV === "production"
+    ? "https://nomoreparties.co/news/v2/everything"
+    : "https://newsapi.org/v2/everything";
 
 // Formatting date publishedAt
 const formatDate = (date) => date.toISOString().split("T")[0];
