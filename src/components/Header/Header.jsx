@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useState, useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-// Importing menu hamburger icons
+// Menu hamburger icons
 import menu_white from "../../assets/menu.svg";
 import menu_black from "../../assets/menu_black.svg";
 // Close buttons
@@ -14,17 +14,22 @@ import closeIcon_black from "../../assets/small_close-btn-dark.svg";
 import logoutIcon_white from "../../assets/logout_white.svg";
 import logoutIcon_black from "../../assets/logout_black.svg";
 
-function Header({ isLoggedIn, handleLoginBtnClick, handleLogOutBtnClick }) {
+function Header({
+  isLoggedIn,
+  handleLoginBtnClick,
+  handleLogOutBtnClick,
+  activeModal,
+}) {
   const { currentUser } = useContext(CurrentUserContext);
   const location = useLocation();
   const isSavedNews = location.pathname === "/saved-news";
 
-  // Consts for opening/closing mobile menu
+  // Tracking 'opened' state of menu
   const [isMobileMenuOpened, setMobileMenuOpened] = useState(false);
   const toggleMobileMenu = () => {
     setMobileMenuOpened(!isMobileMenuOpened);
   };
-  // Get ahold of current user's username
+  // Getting a users name/username
   const getCurrentUserName = () => {
     return currentUser && currentUser.username ? currentUser.username : "";
   };
@@ -43,7 +48,7 @@ function Header({ isLoggedIn, handleLoginBtnClick, handleLogOutBtnClick }) {
       {/* HAMBURGER / CLOSE TOGGLE BUTTON */}
 
       <button
-        className="header__menu-btn"
+        className={`header__menu-btn ${activeModal ? "header__menu-btn_hidden" : ""}`}
         type="button"
         onClick={toggleMobileMenu}
       >
@@ -72,7 +77,10 @@ function Header({ isLoggedIn, handleLoginBtnClick, handleLogOutBtnClick }) {
           {isLoggedIn ? (
             <button
               className={`header__logout-btn ${isSavedNews ? "header_text_dark" : ""}`}
-              onClick={handleLogOutBtnClick}
+              onClick={() => {
+                handleLogOutBtnClick();
+                toggleMobileMenu();
+              }}
             >
               {getCurrentUserName()}
               <img

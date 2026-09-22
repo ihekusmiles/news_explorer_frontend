@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-/* TODO: padding to 102 for saved-news page later ONLY*/
 .newsCardList__layout {
   background-color: #f5f6f7;
   color: #1a1b22;

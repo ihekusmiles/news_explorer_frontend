@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import { validateEmail, validatePassword } from "../../utils/validation";
 
-// Remember that the children refers to anything within
-// the <ModalWithForm></ModalWithForm> tags.
 function LoginModal({
   buttonText,
   isOpen,

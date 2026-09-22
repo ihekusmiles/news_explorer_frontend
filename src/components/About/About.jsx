@@ -7,7 +7,6 @@ function About() {
         className="about__image"
         src={authorImage}
         alt="image"
-        // frontend\src\assets\images\placeholder_image.svg
       />
       <div className="about__container">
         <p className="about__title-text">About the author</p>

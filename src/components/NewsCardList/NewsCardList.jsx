@@ -12,13 +12,13 @@ function NewsCardList({
   savedArticles = [],
 }) {
   const visibleCards = newsCards.slice(0, visibleCount);
-  // check if there are more cards remaining to display
+  // Checking if there are more cards remaining to display
   const hasMoreCards = visibleCount < newsCards.length;
 
   return (
     <>
       <div className="newsCardList__layout">
-        {/* Render search results only on home page */}
+        {/* Rendering search results only on home page */}
         {!isSavedNewsPage && (
           <p className="newsCardList__title">Search results</p>
         )}

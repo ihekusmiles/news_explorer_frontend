@@ -14,14 +14,14 @@ function RegisterModal({
   onSwitchToLogin,
   onRegisterSubmit,
 }) {
-  // define default values with useForm
+  // Definomg default values with useForm
   const { values, handleChange } = useForm({
     email: "",
     password: "",
     username: "",
   });
 
-  // Track email, password, username validation errors
+  // Tracking email, password, username validation errors
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
@@ -41,13 +41,13 @@ function RegisterModal({
     return true;
   };
 
-  // Set up realtime validation feedback while user types
+  // Setting up realtime validation feedback while user types
   const handleEmailChange = (evt) => {
-    // Update form state hook (email value)
+    // Updating form state hook (email value)
     handleChange(evt);
-    // create const that keeps track of input values
+    // Creating const that keeps track of input values
     const newEmail = evt.target.value;
-    // if there is no input value set error to ""
+    // If there is no input value set error to ""
     if (!newEmail) {
       setEmailError("");
       // else if input is not validated show error
@@ -58,7 +58,7 @@ function RegisterModal({
       setEmailError("");
     }
   };
-  // Set up realtime password validation feedback while user types
+  // Setting up realtime password validation feedback while user types
   const handlePasswordChange = (evt) => {
     handleChange(evt);
     const newPassword = evt.target.value;
@@ -69,7 +69,7 @@ function RegisterModal({
       isPasswordValid(newPassword);
     }
   };
-  // Set up a form validity in real-time and set up a isFormValid boolean
+  // Setting up a form validity in real-time and set up a isFormValid boolean
   const isFormValid =
     validateEmail(values.email) &&
     validatePassword(values.password) &&
@@ -107,7 +107,6 @@ function RegisterModal({
           onChange={handleEmailChange}
           required
         />
-        {/* Email error message below input */}
         <span className="modal__error">{emailError}</span>
       </label>
 

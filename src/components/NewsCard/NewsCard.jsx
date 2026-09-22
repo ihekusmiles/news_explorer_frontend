@@ -59,9 +59,10 @@ function NewsCard({
             alt="News article image"
             className="newsCard__image"
           />
-          <p className="newsCard__image-keyword">{article.keyword}</p>
-          {/* conditionally render delete btn depending on whether or not user is logged in */}
-
+          {isSavedNewsPage && (
+            <p className="newsCard__image-keyword">{article.keyword}</p>
+          )}
+          {/* Conditionally rendering delete btn depending on whether or not user is logged in */}
           <div className="newsCard__btn-container">
             {/* Show pop up if on saved news page OR if user is NOT logged in on main page */}
             {(isSavedNewsPage || !isLoggedIn) && (

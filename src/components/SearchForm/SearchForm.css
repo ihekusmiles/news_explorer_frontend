@@ -83,7 +83,6 @@ input:-webkit-autofill:active {
 @media screen and (max-width: 530px) {
   .searchform__container {
     max-width: 288px;
-    max-height: 56px;
     margin: 0 auto 104px;
   }
 

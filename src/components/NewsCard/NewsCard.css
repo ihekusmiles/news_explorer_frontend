@@ -148,7 +148,6 @@
   font-size: 16px;
   line-height: 22px;
   margin: 0 0 18px 0;
-  /* Line clampiing for description */
   display: -webkit-box;
   line-clamp: 5;
   -webkit-line-clamp: 5;

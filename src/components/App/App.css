@@ -7,8 +7,6 @@
   color: white;
 }
 
-/* syntax: color url position / size repeat attachment */
-/* background: #1e1e1e url('your-image.jpg') center / cover no-repeat fixed; */
 .page__content {
   max-width: 1440px;
   margin: 0 auto;
@@ -18,7 +16,6 @@
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.6)),
     url("../../assets/images/page_background.jpg");
-  /* min-height: 576px; */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

@@ -148,7 +148,7 @@ function App() {
     setActiveModal("");
   };
 
-  // function that handles search: fetches articles, adds keyword parameter, sets to state
+  // Function that handles search: fetches articles, adds keyword parameter, sets to state
   const handleSearchSubmit = (query) => {
     setErrorOccurred(false);
     setSearchInProgress(true);
@@ -158,7 +158,7 @@ function App() {
 
     getNewsArticles(query)
       .then((data) => {
-        // Attaching the search keyword to each article object,
+        // Attaching the search keyword to each article object
         const articlesWithKeyword = data.articles.map((article) => ({
           ...article,
           keyword: query,
@@ -167,7 +167,7 @@ function App() {
         setTimeout(() => {
           // Store all fetched articles in state/memory
           setNewsCards(articlesWithKeyword);
-          // set to true or false depending if length is > 0 or not.
+          // Setting to true or false depending if length is > 0 or not.
           setHasSearchResults(articlesWithKeyword.length > 0);
           setSearchInProgress(false);
         }, 2000);
@@ -293,6 +293,7 @@ function App() {
               isLoggedIn={isLoggedIn}
               handleLoginBtnClick={handleOpenLogin}
               handleLogOutBtnClick={handleLogOut}
+              activeModal={activeModal}
             />
             <Routes>
               {/* HOME ROUTE */}
@@ -302,7 +303,6 @@ function App() {
                   <>
                     <Main />
                     <SearchForm onSearch={handleSearchSubmit} />
-
                     {/* When there are search results AND user is logged in */}
                     {searchInProgress && <Preloader />}
 
@@ -313,11 +313,11 @@ function App() {
                         subtitle="Please try again later."
                       />
                     )}
-
                     {/* No results found */}
-                    {!hasSearchResults && searchSubmitted && !errorOccurred && (
-                      <NoResults />
-                    )}
+                    {!hasSearchResults &&
+                      searchSubmitted &&
+                      !errorOccurred &&
+                      !searchInProgress && <NoResults />}
 
                     {/* Results found */}
                     {hasSearchResults && (
@@ -332,7 +332,6 @@ function App() {
                         savedArticles={savedArticles}
                       />
                     )}
-
                     <About />
                   </>
                 }

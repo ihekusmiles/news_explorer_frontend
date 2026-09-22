@@ -1,7 +1,7 @@
 const apiKey = "0b96891b74f04ac3b3428877d08e8a9a";
 const baseURL = "https://newsapi.org/v2/everything";
 
-// format date publishedAt
+// Formatting date publishedAt
 const formatDate = (date) => date.toISOString().split("T")[0];
 
 export const getNewsArticles = (searchQuery) => {
