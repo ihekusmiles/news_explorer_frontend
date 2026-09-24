@@ -2,7 +2,7 @@ function Main() {
   return (
     <div className="main__container">
       <p className="main__text">
-        What's going on in{" "}
+        What&apos;s going on in{" "}
         <span className="main__text-break-line">the world?</span>
       </p>
       <p className="main__subtext">

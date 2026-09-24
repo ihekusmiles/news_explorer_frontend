@@ -52,7 +52,7 @@ function NewsCard({
   return (
     <a href={article.url} className="newsCard__url">
       {" "}
-      <div className="newsCard">
+      <article className="newsCard">
         <div className="newsCard__image-content">
           <img
             src={article.urlToImage}
@@ -85,7 +85,18 @@ function NewsCard({
               <button
                 type="button"
                 className={`newsCard__btn ${isLoggedIn ? "newsCard__btn-enabled" : "newsCard__btn-disabled"}`}
-                onClick={isLoggedIn ? handleSaveClick : openLoginModal}
+                // evt.preventDefault to stop outer <a> from navigating to url
+                // evt.stopPropagation to stop the event from bubbling up the DOM tree
+                // Thus with inline event interceptor, clicking on  save button stops url redirect
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  evt.stopPropagation();
+                  if (isLoggedIn) {
+                    handleSaveClick(evt);
+                  } else {
+                    openLoginModal();
+                  }
+                }}
               >
                 {/* Dynamically apply active class based on isSaved */}
                 <span
@@ -104,7 +115,7 @@ function NewsCard({
             {article.source?.name || article.source}
           </p>
         </div>
-      </div>
+      </article>
     </a>
   );
 }

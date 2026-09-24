@@ -6,7 +6,7 @@
 }
 
 .main__text {
-  font-family: "roboto-slab";
+  font-family: "roboto-slab", sans-serif;
   font-size: 60px;
   line-height: 64px;
   margin: 80px auto 32px;
@@ -48,7 +48,6 @@
     padding: 30px 16px 122px 19px;
   }
   .main__text {
-    font-family: "roboto-slab";
     font-size: 36px;
     line-height: 40px;
     margin: 0;

@@ -14,7 +14,7 @@
 }
 
 .newsCardList__title {
-  font-family: "roboto-slab";
+  font-family: "roboto-slab", sans-serif;
   font-size: 40px;
   line-height: 46px;
   color: #1a1b22;
@@ -26,6 +26,13 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.newsCardList__item {
+  display: flex;
 }
 
 .newsCardList__show-more-btn {

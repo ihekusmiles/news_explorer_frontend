@@ -63,7 +63,6 @@ function App() {
   // MODAL SWITCHING HANDLERS
   // Function that opens log in modal
   const handleOpenLogin = () => {
-    // evt.preventDefault();
     setActiveModal("login");
   };
   // Function that opens sign up modal

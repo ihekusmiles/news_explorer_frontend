@@ -15,7 +15,7 @@
 }
 
 .noResults__text {
-  font-family: "roboto-slab";
+  font-family: "roboto-slab", sans-serif;
   font-size: 26px;
   line-height: 30px;
   margin: 0px;

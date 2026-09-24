@@ -14,7 +14,7 @@ function RegisterModal({
   onSwitchToLogin,
   onRegisterSubmit,
 }) {
-  // Definomg default values with useForm
+  // Defing default values with useForm
   const { values, handleChange } = useForm({
     email: "",
     password: "",
@@ -24,8 +24,26 @@ function RegisterModal({
   // Tracking email, password, username validation errors
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
 
-  // !"" evaluates to true, !"secret" evaluates to false, "" is considered falsy
+  // Setting up realtime validation feedback while user types
+  const handleEmailChange = (evt) => {
+    // Updating form state hook (email value)
+    handleChange(evt);
+    // Creating const that keeps track of input values
+    const newEmail = evt.target.value;
+    // If there is no input value trigger email required error
+    if (!newEmail) {
+      setEmailError("Email is required");
+      // else if input is not validated show error
+    } else if (!validateEmail(newEmail)) {
+      setEmailError("Invalid email address");
+      // else remove error message by setting to ""
+    } else {
+      setEmailError("");
+    }
+  };
+
   // Password validation helper (returns true or false)
   const isPasswordValid = (password) => {
     const trimmedPassword = password.trim();
@@ -41,23 +59,6 @@ function RegisterModal({
     return true;
   };
 
-  // Setting up realtime validation feedback while user types
-  const handleEmailChange = (evt) => {
-    // Updating form state hook (email value)
-    handleChange(evt);
-    // Creating const that keeps track of input values
-    const newEmail = evt.target.value;
-    // If there is no input value set error to ""
-    if (!newEmail) {
-      setEmailError("");
-      // else if input is not validated show error
-    } else if (!validateEmail(newEmail)) {
-      setEmailError("Invalid email address");
-      // else set error to ""
-    } else {
-      setEmailError("");
-    }
-  };
   // Setting up realtime password validation feedback while user types
   const handlePasswordChange = (evt) => {
     handleChange(evt);
@@ -65,10 +66,33 @@ function RegisterModal({
     // Passing the fresh input value directly to bypass React state delay**
     if (!newPassword) {
       setPasswordError("");
-    } else {
-      isPasswordValid(newPassword);
     }
+    isPasswordValid(newPassword);
   };
+
+  // Username validation helper (returns true or false)
+  const isUsernameValid = (username) => {
+    const trimmedUsername = username.trim();
+    if (!trimmedUsername) {
+      setUsernameError("Username is required");
+      return false;
+    } else if (trimmedUsername.length < 3) {
+      setUsernameError("Username must be at least 3 characters long");
+      return false;
+    }
+    setUsernameError("");
+    return true;
+  };
+
+  const handleUsernameChange = (evt) => {
+    handleChange(evt);
+    const username = evt.target.value;
+    if (!username) {
+      setUsernameError("");
+    }
+    isUsernameValid(username);
+  };
+
   // Setting up a form validity in real-time and set up a isFormValid boolean
   const isFormValid =
     validateEmail(values.email) &&
@@ -133,9 +157,10 @@ function RegisterModal({
           id="register-username"
           placeholder="Enter your username"
           value={values.username || ""}
-          onChange={handleChange}
+          onChange={handleUsernameChange}
           required
         />
+        <span className="modal__error">{usernameError}</span>
       </label>
     </ModalWithForm>
   );

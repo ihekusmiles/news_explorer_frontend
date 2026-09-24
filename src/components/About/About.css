@@ -22,7 +22,7 @@
 }
 
 .about__title-text {
-  font-family: "roboto-slab";
+  font-family: "roboto-slab", sans-serif;
   font-size: 40px;
   line-height: 46px;
   margin-top: 0;

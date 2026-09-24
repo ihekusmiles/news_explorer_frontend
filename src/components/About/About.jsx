@@ -3,17 +3,13 @@ import authorImage from "../../assets/images/author_image.jpg";
 function About() {
   return (
     <section className="about">
-      <img
-        className="about__image"
-        src={authorImage}
-        alt="image"
-      />
+      <img className="about__image" src={authorImage} alt="image" />
       <div className="about__container">
         <p className="about__title-text">About the author</p>
         <p className="about__paragraph">
           {" "}
-          Hi! I'm Hector, a full-stack developer passionate about building fast,
-          intuitive, and visually polished web applications.
+          Hi! I&apos;m Hector, a full-stack developer passionate about building
+          fast, intuitive, and visually polished web applications.
         </p>
         <p className="about__paragraph">
           {" "}

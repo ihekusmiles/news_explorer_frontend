@@ -2,7 +2,7 @@ const apiKey = "0b96891b74f04ac3b3428877d08e8a9a";
 
 // Using a ternary operator to handle bypass restriction when in production mode;
 const baseURL =
-  process.env.NODE_ENV === "production"
+  import.meta.env.MODE === "production"
     ? "https://nomoreparties.co/news/v2/everything"
     : "https://newsapi.org/v2/everything";
 
@@ -36,7 +36,7 @@ export const getNewsArticles = (searchQuery) => {
 
 // Simulating getting articles with hard-coded data
 export function getItems() {
-  return new Promise((resolve, reject) =>
+  return new Promise((resolve) =>
     resolve([
       {
         _id: "65f7371e7bce9e7d331b11a01",
@@ -116,13 +116,16 @@ export function getItems() {
 }
 // Simulating deleting items
 export function removeArticle(article) {
-  return new Promise((resolve, reject) => resolve([{}]));
+  return new Promise((resolve) => {
+    console.log("Simulating removing article with URL:", article?.url);
+    resolve([{ success: true }]);
+  });
 }
 
 // Simulating saving articles
 export function saveArticle(article) {
   // article is a search result from the NewsAPI
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     resolve({
       _id: "65f7371e7bce9e7d331b11a000",
       source: article.source?.name || article.source,

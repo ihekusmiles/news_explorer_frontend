@@ -23,20 +23,22 @@ function NewsCardList({
           <p className="newsCardList__title">Search results</p>
         )}
         {/* Only render the visibleCards */}
-        <div className="newsCardList__cards-container">
+        <ul className="newsCardList__cards-container">
           {visibleCards.map((article, index) => (
-            <NewsCard
-              key={index}
-              article={article}
-              isSavedNewsPage={isSavedNewsPage}
-              isLoggedIn={isLoggedIn}
-              onSaveArticle={onSaveArticle}
-              onRemoveArticle={onRemoveArticle}
-              openLoginModal={onSaveBtnClick}
-              savedArticles={savedArticles}
-            />
+            // Using a fallback pattern in key; in this case article.url will always be unique
+            <li key={article.url || index} className="newsCardList__item">
+              <NewsCard
+                article={article}
+                isSavedNewsPage={isSavedNewsPage}
+                isLoggedIn={isLoggedIn}
+                onSaveArticle={onSaveArticle}
+                onRemoveArticle={onRemoveArticle}
+                openLoginModal={onSaveBtnClick}
+                savedArticles={savedArticles}
+              />
+            </li>
           ))}
-        </div>
+        </ul>
         {/* If hasMoreCards then show button */}
         {hasMoreCards && (
           <button

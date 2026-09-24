@@ -1,7 +1,7 @@
 .modal__label {
   display: flex;
   flex-direction: column;
-  font-family: "inter";
+  font-family: "inter", sans-serif;
   font-size: 12px;
   line-height: 100%;
   color: #2f71e5;
@@ -21,7 +21,7 @@
 }
 
 .modal__error {
-  font-family: "inter";
+  font-family: "inter", sans-serif;
   font-size: 12px;
   line-height: 100%;
   color: red;

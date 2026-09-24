@@ -16,15 +16,43 @@ function LoginModal({
   });
 
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
+  // Realtime validation for email input change
   const handleEmailChange = (evt) => {
     handleChange(evt);
     const newEmail = evt.target.value;
-    if (!newEmail || validateEmail(newEmail)) {
-      setEmailError("");
-    } else {
+    if (!newEmail) {
+      setEmailError("Email is required");
+    } else if (!validateEmail(newEmail)) {
       setEmailError("Invalid email address");
+    } else {
+      setEmailError("");
     }
+  };
+
+  // Return true or false if password is valid or not
+  const isPasswordValid = (password) => {
+    const trimmedPassword = password.trim();
+    if (!trimmedPassword) {
+      setPasswordError("Password is required");
+      return false;
+    } else if (trimmedPassword.length < 6) {
+      setPasswordError("Please enter your password");
+      return false;
+    }
+    setPasswordError("");
+    return true;
+  };
+
+  // Realtime validation for password input change
+  const handlePasswordChange = (evt) => {
+    handleChange(evt);
+    const usersPassword = evt.target.value;
+    if (!usersPassword) {
+      setPasswordError("");
+    }
+    isPasswordValid(usersPassword);
   };
 
   // Validating email and password in form and returning a boolean
@@ -74,9 +102,10 @@ function LoginModal({
           name="password"
           placeholder="Enter password"
           value={values.password || ""}
-          onChange={handleChange}
+          onChange={handlePasswordChange}
           required
         />
+        <span className="modal__error">{passwordError}</span>
       </label>
     </ModalWithForm>
   );
