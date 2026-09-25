@@ -1,0 +1,139 @@
+.modal {
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal__is-opened {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal__content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  padding: 34px 36px 28px;
+  border-radius: 16px;
+  max-width: 430px;
+  width: 100%;
+}
+
+.modal__confirmation-content {
+  padding: 43px 79px 51px 36px;
+}
+
+.modal__title {
+  color: #1a1b22;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 100%;
+  margin: 0 auto 22px 0;
+}
+
+.modal__confirmation-title {
+  margin: 0;
+}
+
+.modal__close {
+  position: absolute;
+  top: -46px;
+  right: -46px;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modal__close-btn {
+  background-color: transparent;
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__submit {
+  font-weight: 500;
+  color: #b6bcbf;
+  background-color: #e6e8eb;
+  border: 0;
+  border-radius: 100px;
+  padding: 20px 114px;
+  margin: 8px 0 16px 0;
+  cursor: not-allowed;
+}
+
+.modal__submit_enabled {
+  color: #fff;
+  background-color: #2f71e5;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal__form-change-text {
+  display: flex;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.modal__form-change-btn {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: #2f71e5;
+  cursor: pointer;
+}
+
+.modal__confirmation-btn {
+  font-size: 18px;
+  padding: 0;
+  margin: 14px auto 0 0;
+}
+
+@media screen and (max-width: 530px) {
+  .modal {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: fixed;
+    margin-top: 56px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .modal__content {
+    padding: 16px;
+    max-width: 320px;
+    width: 100%;
+  }
+  .modal__close-btn {
+    width: 24px;
+    height: 24px;
+  }
+
+  .modal__close {
+    position: absolute;
+    top: -40px;
+    right: 8px;
+    padding: 0;
+    margin: 0;
+  }
+}
