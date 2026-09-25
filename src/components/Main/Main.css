@@ -45,7 +45,7 @@
 
 @media screen and (max-width: 530px) {
   .main__container {
-    padding: 30px 16px 122px 19px;
+    padding: 30px 16px 122px 16px;
   }
   .main__text {
     font-size: 36px;

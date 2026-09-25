@@ -58,11 +58,17 @@
     gap: 38px;
     padding: 20px 16px 22px;
   }
+  .footer__links {
+    gap: 16px;
+  }
   .footer__page-links {
     flex-direction: column;
     gap: 25px;
   }
   .footer__socialmedia-links {
     align-items: start;
+  }
+  .footer__list {
+    gap: 16px;
   }
 }

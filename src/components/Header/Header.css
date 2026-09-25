@@ -136,7 +136,6 @@
   .header__logout-btn {
     margin: 0;
     padding: 16px 116px 16px 117px;
-    width: 100%;
     max-width: 288px;
     justify-content: center;
   }

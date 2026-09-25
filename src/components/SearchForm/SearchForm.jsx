@@ -18,7 +18,7 @@ function SearchForm({ onSearch }) {
     onSearch(values.q);
   };
   return (
-    <search>
+    <search className="searchform">
       {}
       <form
         className="searchform__container"
